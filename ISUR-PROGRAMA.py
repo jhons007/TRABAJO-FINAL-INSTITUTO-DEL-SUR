@@ -17,10 +17,10 @@ def menu():
     os.system("cls")
     print("Base de datos del Instituto del Sur")
     print("")
-    print("1.- agregar articulo")
-    print("2.- ver alumno")
-    print("3.- modificar articulo")
-    print("4.- iliminar articulo")
+    print("1.- Agregar datos del alumno")
+    print("2.- Reporte del alumno alumno")
+    print("3.- Modificar datos del alumno")
+    print("4.- Iliminar datos del alumno")
     print("5.- salir")
     while(1):
         try:
