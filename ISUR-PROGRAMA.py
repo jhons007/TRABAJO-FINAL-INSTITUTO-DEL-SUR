@@ -2,25 +2,56 @@ import os
 import sys,time
 import sqlite3
 
+def verificar(a):
+    for c in a:
+        if(ord(c)<65 or ord(c)>90 ) and (ord(c)<97 or ord(c)>122) and (ord(c)!=32):
+            return False
+    return True
+
 def nuevo():
     os.system("cls")
-    nombre=input("digite el nombre del alumno")
-    edad=input("digire la edad del alumno")
-    dni=input("digite el dni del alumno")
+    print("ingrese su nombre")
+    nombre=input()
+    while(not verificar(nombre)):
+        nombre=input("ingrese su nombre correctamente: ")
+    while(1):
+        try:
+            print("ingrese su edad")
+            edad=input()
+            edad=int(edad)
+            while(edad<0 or edad>170):
+                print("edad incorrecta vuelv intentar...: ")
+                edad=input()
+                edad=int(edad)
+            break
+        except ValueError:
+            print("ingrese correctamente ...: ")       
+    while(1):
+        try:
+            print("ingrese su dni")
+            dni=input()
+            dni=int(dni)
+            while(len(str(dni))!=8):
+                dni=int(input("ingrese dni de 8 digitos"))
+            break
+        except ValueError:
+            print("error ingrese correctamente su dni")
     con=sqlite3.connect("trabajo final.s3db")
     cursor=con.cursor()
-    cursor.execute("insert into instituto (nombre,edad,dni) values ('"+nombre+"','"+edad+"','"+dni+"')")
+    cursor.execute("insert into instituto (nombre,edad,dni) values ('"+nombre+"','"+edad+"','"+str(dni)+"')")
     con.commit()
     con.close()
+    time.sleep(3)
+    menu()
 
 def menu():
     os.system("cls")
     print("Base de datos del Instituto del Sur")
     print("")
-    print("1.- Agregar datos del alumno")
-    print("2.- Reporte del alumno alumno")
-    print("3.- Modificar datos del alumno")
-    print("4.- Iliminar datos del alumno")
+    print("1.- agregar datos del alumno")
+    print("2.- ver alumno")
+    print("3.- modificar datos del alumno")
+    print("4.- iliminar datos del alumno")
     print("5.- salir")
     while(1):
         try:
@@ -104,7 +135,7 @@ def iliminar():
         print("\t edad:"'\t'+str(instituto[2]))
         print("\t dni:"'\t'+str(instituto[3]))
         print("\t codigo:"'\t'+str(instituto[0]))
-    cod=input("digite el codigo del articulo que desea iliminar")
+    cod=input("digite el codigo  que desea iliminar")
     sql="delete from instituto where codigo="+cod
     cursor.execute(sql)
     con.commit()
